@@ -35,7 +35,7 @@ export default function Register() {
     <View style={styles.container}>
       {/* Logo */}
       <Image
-        source={require("../../assets/images/logo.png")}
+        source={require("../../../assets/images/logo.png")}
         style={styles.logo}
       />
 

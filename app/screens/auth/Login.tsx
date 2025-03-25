@@ -34,7 +34,7 @@ export default function LoginScreen() {
     <View style={styles.container}>
       {/* Logo */}
       <Image
-        source={require("../../assets/images/logo.png")}
+        source={require("../../../assets/images/logo.png")}
         style={styles.logo}
       />
 
@@ -97,7 +97,7 @@ export default function LoginScreen() {
 
       {/* Quên mật khẩu */}
       <TouchableOpacity
-        onPress={() => router.push("/auth/ForgotPassword")}
+        onPress={() => router.push("/screens/auth/ForgotPassword")}
       >
         <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
       </TouchableOpacity>
@@ -112,7 +112,7 @@ export default function LoginScreen() {
 
       {/* Đăng ký */}
       <TouchableOpacity
-        onPress={() => router.push("/auth/Register")}
+        onPress={() => router.push("/screens/auth/Register")}
       >
         <Text style={styles.registerText}>
           Bạn chưa có tài khoản?{" "}

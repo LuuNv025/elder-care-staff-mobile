@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import DaySelector from "@/components/DaySelector";
-import ScheduleItem from "@/components/ScheduleItem";
+import DaySelector from "@/app/components/DaySelector";
+import ScheduleItem from "@/app/components/ScheduleItem";
 
 const getWeekDays = () => {
   const days = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];

@@ -3,16 +3,30 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 
-const IncomeCard = ({ income }: { income: string }) => {
+interface IncomeCardProps {
+  title: string;
+  icon: keyof typeof Ionicons.glyphMap; // Đảm bảo chỉ nhận các icon hợp lệ
+  income: string;
+  color?: string;
+  onPress?: () => void;
+}
+
+const IncomeCard: React.FC<IncomeCardProps> = ({
+  title,
+  icon,
+  income,
+  color = "green",
+  onPress,
+}) => {
   return (
-    <TouchableOpacity onPress={() => alert("Lịch sử thu nhập")}>
+    <TouchableOpacity onPress={onPress}>
       <Card style={styles.card}>
         <Card.Title
-          title="Thu nhập hiện tại"
-          left={() => <Ionicons name="cash-outline" size={24} color="green" />}
+          title={title}
+          left={() => <Ionicons name={icon as any} size={24} color={color} />} // Cast icon
         />
         <Card.Content>
-          <Text style={styles.income}>{income}</Text>
+          <Text style={[styles.income, { color }]}>{income}</Text>
         </Card.Content>
       </Card>
     </TouchableOpacity>
@@ -27,7 +41,6 @@ const styles = StyleSheet.create({
   income: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "green",
   },
 });
 

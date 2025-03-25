@@ -22,7 +22,13 @@ const Home = () => {
       />
 
       {/* Thu nhập */}
-      <IncomeCard income={income} />
+      <IncomeCard
+        title="Thu nhập hiện tại"
+        icon="cash-outline"
+        income="10,000,000 VND"
+        color="green"
+        onPress={() => alert("Xem chi tiết thu nhập")}
+      />
       <WorkStatsCard workHistory={workHistory} />
       {/* Công việc đang làm */}
       <AvailableWorkList />

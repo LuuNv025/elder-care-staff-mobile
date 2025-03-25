@@ -11,7 +11,7 @@ import {
 import { Card, Divider } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import WorkList from "../../../components/Worklist";
+import WorkList from "../../components/Worklist";
 
 const Home = () => {
   const router = useRouter();

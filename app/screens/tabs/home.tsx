@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  ScrollView,
+  FlatList,
   Switch,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
   Image,
 } from "react-native";
-import { Card, Button, Divider } from "react-native-paper";
+import { Card, Divider } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import WorkList from "../../../components/Worklist";
 
 const Home = () => {
   const router = useRouter();
@@ -37,6 +37,8 @@ const Home = () => {
     },
   ];
 
+  const data = [...ongoingWorks, ...newWorks];
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -60,108 +62,75 @@ const Home = () => {
           />
         </View>
       </View>
+
       {/* Trạng thái sẵn sàng nhận ca */}
       <View style={styles.statusContainer}>
         <Text style={styles.statusText}>Sẵn sàng nhận ca</Text>
         <Switch value={isAvailable} onValueChange={setIsAvailable} />
       </View>
 
-      <ScrollView>
-        {/* Thu nhập hiện tại */}
-        <TouchableOpacity onPress={() => alert("Lịch sử thu nhập")}>
-          <Card style={styles.card}>
-            <Card.Title
-              title="Thu nhập hiện tại"
-              left={() => (
-                <Ionicons name="cash-outline" size={24} color="green" />
-              )}
-            />
-            <Card.Content>
-              <Text style={styles.income}>{income}</Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
+      {/* Danh sách công việc */}
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={
+          <>
+            {/* Thu nhập hiện tại */}
+            <TouchableOpacity onPress={() => alert("Lịch sử thu nhập")}>
+              <Card style={styles.card}>
+                <Card.Title
+                  title="Thu nhập hiện tại"
+                  left={() => (
+                    <Ionicons name="cash-outline" size={24} color="green" />
+                  )}
+                />
+                <Card.Content>
+                  <Text style={styles.income}>{income}</Text>
+                </Card.Content>
+              </Card>
+            </TouchableOpacity>
 
-        {/* Công việc đang làm */}
-        <Card style={styles.card}>
-          <Card.Title
-            title="Công việc đang làm"
-            left={() => <Ionicons name="time-outline" size={24} color="blue" />}
-          />
-          <Card.Content>
-            <FlatList
+            {/* Công việc đang làm */}
+            <WorkList
+              title="Công việc đang làm"
+              icon="time-outline"
+              color="blue"
               data={ongoingWorks}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <View style={styles.workItem}>
-                  <View>
-                    <Text style={styles.workText}>
-                      {item.name} ({item.address})
-                    </Text>
-                    <Text style={styles.workDetail}>
-                      Thời gian: {item.time}
-                    </Text>
-                    <Text style={styles.workDetail}>
-                      Thu nhập: {item.earnings}
-                    </Text>
-                  </View>
-                </View>
-              )}
             />
-          </Card.Content>
-        </Card>
 
-        {/* Công việc mới */}
-        <Card style={styles.card}>
-          <Card.Title
-            title="Công việc mới"
-            left={() => (
-              <Ionicons name="briefcase-outline" size={24} color="orange" />
-            )}
-          />
-          <Card.Content>
-            <FlatList
+            {/* Công việc mới */}
+            <WorkList
+              title="Công việc mới"
+              icon="briefcase-outline"
+              color="orange"
               data={newWorks}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <View style={styles.workItem}>
-                  <View>
-                    <Text style={styles.workText}>
-                      {item.name} ({item.address})
-                    </Text>
-                    <Text style={styles.workDetail}>
-                      Thời gian: {item.time}
-                    </Text>
-                    <Text style={styles.workDetail}>
-                      Thu nhập: {item.earnings}
-                    </Text>
-                  </View>
-                  <Button mode="contained" onPress={() => alert("Nhận việc")}>
-                    Nhận việc
-                  </Button>
-                </View>
-              )}
+              showButton
             />
-          </Card.Content>
-        </Card>
 
-        <Divider style={styles.divider} />
-
-        {/* Số ca đã làm */}
-        <TouchableOpacity onPress={() => router.push("work-history")}>
-          <Card style={styles.card}>
-            <Card.Title
-              title="Số ca đã làm trong tuần"
-              left={() => (
-                <Ionicons name="stats-chart-outline" size={24} color="purple" />
-              )}
-            />
-            <Card.Content>
-              <Text style={styles.stats}>{workHistory} ca</Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
-      </ScrollView>
+            <Divider style={styles.divider} />
+          </>
+        }
+        renderItem={null} // Không cần render item vì WorkList đã hiển thị danh sách
+        ListFooterComponent={
+          <TouchableOpacity onPress={() => router.push("/screens/auth/Login")}>
+            <Card style={styles.card}>
+              <Card.Title
+                title="Số ca đã làm trong tuần"
+                left={() => (
+                  <Ionicons
+                    name="stats-chart-outline"
+                    size={24}
+                    color="purple"
+                  />
+                )}
+              />
+              <Card.Content>
+                <Text style={styles.stats}>{workHistory} ca</Text>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+        }
+      />
     </View>
   );
 };
@@ -215,20 +184,6 @@ const styles = StyleSheet.create({
   stats: {
     fontSize: 18,
     fontWeight: "bold",
-  },
-  workItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  workText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  workDetail: {
-    fontSize: 14,
-    color: "gray",
   },
 });
 

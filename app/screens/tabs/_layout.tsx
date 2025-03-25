@@ -3,7 +3,12 @@ import { Home, Briefcase, Calendar, User } from "lucide-react-native";
 
 export default function Layout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: "#28A745",
+      }}
+    >
       <Tabs.Screen
         name="home"
         options={{

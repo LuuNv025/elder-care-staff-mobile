@@ -148,7 +148,7 @@ const Home = () => {
         <Divider style={styles.divider} />
 
         {/* Số ca đã làm */}
-        <TouchableOpacity onPress={() => router.push("work-history")}>
+        <TouchableOpacity onPress={() => router.push("/screens/auth/Login")}>
           <Card style={styles.card}>
             <Card.Title
               title="Số ca đã làm trong tuần"

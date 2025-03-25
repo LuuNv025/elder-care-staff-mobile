@@ -41,7 +41,7 @@ export default function Profile() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => router.push("/screens/auth/Login")}
+            onPress={() => router.push("/screens/income-screen")}
           >
             <Ionicons name={item.icon as any} size={20} color="#333" />
             <Text style={styles.menuText}>{item.title}</Text>

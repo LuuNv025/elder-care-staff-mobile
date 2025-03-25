@@ -48,9 +48,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#28A745",
     width: 90,
+    paddingRight: 15,
   },
   content: {
     flex: 1,
+    gap: 5,
   },
   title: {
     fontSize: 18,

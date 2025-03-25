@@ -1,80 +1,82 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import { Card, Button } from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-type WorkItem = {
-  id: string;
-  name: string;
-  address: string;
-  time: string;
-  earnings: string;
-};
+const mockData = [
+  {
+    id: "1",
+    name: "Chăm sóc ông A",
+    location: "Hà Nội",
+    time: "08:00",
+    status: "ongoing",
+  },
+  {
+    id: "2",
+    name: "Hỗ trợ bà B",
+    location: "TP.HCM",
+    time: "10:00",
+    status: "completed",
+  },
+  {
+    id: "3",
+    name: "Chăm sóc ông A",
+    location: "Hà Nội",
+    time: "08:00",
+    status: "ongoing",
+  },
+  {
+    id: "4",
+    name: "Chăm sóc ông A",
+    location: "Hà Nội",
+    time: "08:00",
+    status: "ongoing",
+  },
+  {
+    id: "5",
+    name: "Chăm sóc ông A",
+    location: "Hà Nội",
+    time: "08:00",
+    status: "ongoing",
+  },
+];
 
-type WorkListProps = {
-  title: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  color: string;
-  data: WorkItem[];
-  showButton?: boolean;
-};
+const WorkList = ({ status }: { status: "ongoing" | "completed" }) => {
+  const navigation = useNavigation();
+  const filteredData = mockData.filter((item) => item.status === status);
 
-const WorkList: React.FC<WorkListProps> = ({
-  title,
-  icon,
-  color,
-  data,
-  showButton,
-}) => (
-  <Card style={styles.card}>
-    <Card.Title
-      title={title}
-      left={() => <Ionicons name={icon} size={24} color={color} />}
+  return (
+    <FlatList
+      data={filteredData}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.card}
+         // onPress={() => navigation.navigate("WorkDetail", { workId: item.id })}
+        >
+          <Text style={styles.title}>{item.name}</Text>
+          <Text>
+            {item.location} - {item.time}
+          </Text>
+        </TouchableOpacity>
+      )}
     />
-    <Card.Content>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.workItem}>
-            <View>
-              <Text style={styles.workText}>
-                {item.name} ({item.address})
-              </Text>
-              <Text style={styles.workDetail}>Thời gian: {item.time}</Text>
-              <Text style={styles.workDetail}>Thu nhập: {item.earnings}</Text>
-            </View>
-            {showButton && (
-              <Button mode="contained" onPress={() => alert("Nhận việc")}>
-                Nhận việc
-              </Button>
-            )}
-          </View>
-        )}
-      />
-    </Card.Content>
-  </Card>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
-    margin: 10,
-    borderRadius: 10,
+    padding: 16,
+    backgroundColor: "white",
+    marginVertical: 8,
+    borderRadius: 20,
   },
-  workItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  workText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  workDetail: {
-    fontSize: 14,
-    color: "gray",
-  },
+  title: { fontWeight: "bold", fontSize: 16, paddingBottom: 8 },
 });
 
 export default WorkList;

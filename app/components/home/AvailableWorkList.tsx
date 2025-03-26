@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { Card, Divider } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
@@ -85,40 +86,46 @@ const AvailableWorkList = () => {
   }
 
   return (
-    <Card style={styles.card}>
-      <Card.Title
-        title="Công việc khả dụng"
-        left={() => (
-          <Ionicons name="briefcase-outline" size={24} color="#007bff" />
-        )}
-      />
-      <Card.Content>
-        {jobs.length === 0 ? (
-          <Text style={styles.emptyText}>Không có công việc khả dụng</Text>
-        ) : (
-          jobs.map((job, index) => (
-            <View key={job.id}>
-              <TouchableOpacity
+    <ScrollView>
+      <Card style={styles.card}>
+        <Card.Title
+          title="Công việc khả dụng"
+          left={() => (
+            <Ionicons name="briefcase-outline" size={24} color="#007bff" />
+          )}
+        />
+        <Card.Content>
+          {jobs.length === 0 ? (
+            <Text style={styles.emptyText}>Không có công việc khả dụng</Text>
+          ) : (
+            jobs.map((job, index) => (
+              <View key={job.id}>
+                <TouchableOpacity
                 // onPress={() =>
                 //   navigation.navigate("WorkDetail", { workId: job.id })
                 // }
-              >
-                <View style={styles.jobItem}>
-                  <Ionicons name="location-outline" size={20} color="#007bff" />
-                  <View style={styles.jobInfo}>
-                    <Text style={styles.jobTitle}>{job.name}</Text>
-                    <Text style={styles.jobSubtitle}>
-                      {job.location} - {job.time}
-                    </Text>
+                >
+                  <View style={styles.jobItem}>
+                    <Ionicons
+                      name="location-outline"
+                      size={20}
+                      color="#007bff"
+                    />
+                    <View style={styles.jobInfo}>
+                      <Text style={styles.jobTitle}>{job.name}</Text>
+                      <Text style={styles.jobSubtitle}>
+                        {job.location} - {job.time}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-              {index < jobs.length - 1 && <Divider style={styles.divider} />}
-            </View>
-          ))
-        )}
-      </Card.Content>
-    </Card>
+                </TouchableOpacity>
+                {index < jobs.length - 1 && <Divider style={styles.divider} />}
+              </View>
+            ))
+          )}
+        </Card.Content>
+      </Card>
+    </ScrollView>
   );
 };
 
